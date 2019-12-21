@@ -71,6 +71,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Build and gradle files
-build/*
+build
 gradle/gradle-wrapper.jar
 .gradle
