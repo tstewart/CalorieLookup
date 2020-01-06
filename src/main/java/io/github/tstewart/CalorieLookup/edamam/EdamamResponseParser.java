@@ -9,7 +9,7 @@ import io.github.tstewart.CalorieLookup.response.IRecipeResponseParser;
 
 public class EdamamResponseParser {
 
-    public class FoodResponseParser implements IFoodResponseParser {
+    public static class FoodResponseParser implements IFoodResponseParser {
 
         @Override
         public Food parseResponse(String apiResponse) throws InvalidResponseException {
@@ -17,7 +17,7 @@ public class EdamamResponseParser {
         }
     }
 
-    public class RecipeResponseParser implements IRecipeResponseParser {
+    public static class RecipeResponseParser implements IRecipeResponseParser {
 
         @Override
         public Recipe parseResponse(String apiResponse) throws InvalidResponseException {
