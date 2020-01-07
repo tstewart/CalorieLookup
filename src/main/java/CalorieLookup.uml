@@ -3,28 +3,28 @@
   <ID>JAVA</ID>
   <OriginalElement>io.github.tstewart.CalorieLookup</OriginalElement>
   <nodes>
-    <node x="164.0" y="311.0">io.github.tstewart.CalorieLookup.Recipe</node>
-    <node x="313.0" y="0.0">io.github.tstewart.CalorieLookup.Connection</node>
-    <node x="295.0" y="311.0">io.github.tstewart.CalorieLookup.Food</node>
-    <node x="217.0" y="194.0">io.github.tstewart.CalorieLookup.nutrients</node>
-    <node x="160.0" y="23.5">io.github.tstewart.CalorieLookup.request</node>
-    <node x="0.0" y="311.0">io.github.tstewart.CalorieLookup.error</node>
-    <node x="0.0" y="194.0">io.github.tstewart.CalorieLookup.APIRequest</node>
-    <node x="163.5" y="123.0">io.github.tstewart.CalorieLookup.edamam</node>
-    <node x="0.0" y="23.5">io.github.tstewart.CalorieLookup.response</node>
+    <node x="356.0" y="334.0">io.github.tstewart.CalorieLookup.Recipe</node>
+    <node x="0.0" y="0.0">io.github.tstewart.CalorieLookup.Connection</node>
+    <node x="0.0" y="194.0">io.github.tstewart.CalorieLookup.Food</node>
+    <node x="0.0" y="334.0">io.github.tstewart.CalorieLookup.nutrients</node>
+    <node x="204.0" y="23.5">io.github.tstewart.CalorieLookup.request</node>
+    <node x="192.0" y="334.0">io.github.tstewart.CalorieLookup.error</node>
+    <node x="257.0" y="194.0">io.github.tstewart.CalorieLookup.APIRequest</node>
+    <node x="207.5" y="123.0">io.github.tstewart.CalorieLookup.edamam</node>
+    <node x="357.0" y="23.5">io.github.tstewart.CalorieLookup.response</node>
   </nodes>
   <notes />
   <edges>
     <edge source="io.github.tstewart.CalorieLookup.edamam" target="io.github.tstewart.CalorieLookup.response">
-      <point x="-42.0" y="-13.0" />
-      <point x="184.5" y="98.0" />
-      <point x="70.0" y="98.0" />
+      <point x="42.0" y="-13.0" />
+      <point x="312.5" y="98.0" />
+      <point x="427.0" y="98.0" />
       <point x="0.0" y="13.0" />
     </edge>
     <edge source="io.github.tstewart.CalorieLookup.edamam" target="io.github.tstewart.CalorieLookup.Connection">
-      <point x="42.0" y="-13.0" />
-      <point x="268.5" y="98.0" />
-      <point x="405.0" y="98.0" />
+      <point x="-42.0" y="-13.0" />
+      <point x="228.5" y="98.0" />
+      <point x="92.0" y="98.0" />
       <point x="0.0" y="36.5" />
     </edge>
     <edge source="io.github.tstewart.CalorieLookup.edamam" target="io.github.tstewart.CalorieLookup.request">
@@ -32,7 +32,7 @@
       <point x="0.0" y="13.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="166.0" y="157.5" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="166.0" y="158.0" />
   <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
