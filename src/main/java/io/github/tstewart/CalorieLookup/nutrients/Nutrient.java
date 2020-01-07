@@ -1,7 +1,13 @@
 package io.github.tstewart.CalorieLookup.nutrients;
 
 public class Nutrient {
+    /**
+     * Quantity of the specified nutrient
+     */
     private int amount;
+    /**
+     * Nutrition code (e.g. calorie nutrition code is CAL)
+     */
     private String ntrCode;
 
     public int getAmount() {

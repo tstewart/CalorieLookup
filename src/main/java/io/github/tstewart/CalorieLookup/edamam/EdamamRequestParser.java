@@ -8,11 +8,21 @@ import io.github.tstewart.CalorieLookup.request.IRecipeRequestParser;
 
 public class EdamamRequestParser implements IFoodRequestParser, IRecipeRequestParser {
 
+    /**
+     * Creates a formatted API request from the provided food
+     * @param food Food to be formatted
+     * @return Formatted API request
+     */
     @Override
     public APIRequest createRequest(Food food) {
         return null;
     }
 
+    /**
+     * Creates a formatted API request from the provided recipe
+     * @param recipe Recipe to be formatted
+     * @return Formatted API request
+     */
     @Override
     public APIRequest createRequest(Recipe recipe) {
         return null;
