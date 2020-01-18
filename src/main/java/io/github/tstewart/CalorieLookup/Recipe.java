@@ -21,13 +21,13 @@ public class Recipe {
     /**
      * Total nutrients in the meal
      */
-    private ArrayList<Nutrient> nurients;
+    private ArrayList<Nutrient> nutrients;
 
-    public Recipe(String name, HashMap<String, Float> ingredients, int calories, ArrayList<Nutrient> nurients) {
+    public Recipe(String name, HashMap<String, Float> ingredients, int calories, ArrayList<Nutrient> nutrients) {
         this.name = name;
         this.ingredients = ingredients;
         this.calories = calories;
-        this.nurients = nurients;
+        this.nutrients = nutrients;
     }
 
     public String getName() {
@@ -54,11 +54,11 @@ public class Recipe {
         this.calories = calories;
     }
 
-    public ArrayList<Nutrient> getNurients() {
-        return nurients;
+    public ArrayList<Nutrient> getNutrients() {
+        return nutrients;
     }
 
-    public void setNurients(ArrayList<Nutrient> nurients) {
-        this.nurients = nurients;
+    public void setNutrients(ArrayList<Nutrient> nutrients) {
+        this.nutrients = nutrients;
     }
 }
