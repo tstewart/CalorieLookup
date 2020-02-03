@@ -2,10 +2,25 @@ package io.github.tstewart.CalorieLookup.edamam;
 
 import io.github.tstewart.CalorieLookup.APIRequest;
 import io.github.tstewart.CalorieLookup.Connection;
+import io.github.tstewart.CalorieLookup.Food;
+import io.github.tstewart.CalorieLookup.Recipe;
 import io.github.tstewart.CalorieLookup.error.APICallLimitReachedException;
 import io.github.tstewart.CalorieLookup.error.InvalidRequestException;
+import io.github.tstewart.CalorieLookup.nutrients.Nutrient;
+import io.github.tstewart.CalorieLookup.request.FoodRequest;
+import io.github.tstewart.CalorieLookup.request.RecipeRequest;
+import io.github.tstewart.CalorieLookup.request.Request;
+import io.github.tstewart.CalorieLookup.util.JSONReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class EdamamConnection extends Connection {
+
+    String url = "https://api.edamam.com/api/food-database/parser?";
+    String apiParamFormat = "app_id=%s&app_key=%s";
+
 
     /**
      * API key and api ID for accessing edamam API
@@ -26,8 +41,42 @@ public class EdamamConnection extends Connection {
      * @throws APICallLimitReachedException If the Edamam API has reached the maximum number of hourly queries
      */
     @Override
-    public String request(APIRequest request) throws InvalidRequestException, APICallLimitReachedException {
+    public JSONObject request(APIRequest request) throws InvalidRequestException, APICallLimitReachedException {
+        if(request == null) throw new InvalidRequestException("Please specify a valid APIRequest");
+        if(apiKey == null || apiId == null) throw new InvalidRequestException("A valid API id and key must be provided.");
+
+        Request requestType = request.getRequest();
+        String requestUrl;
+
+        if(requestType instanceof FoodRequest) {
+            requestUrl = createFormattedFoodString(((FoodRequest) requestType).getFood());
+        }
+        else if(requestType instanceof RecipeRequest) {
+            RecipeRequest recipeRequest = (RecipeRequest) requestType;
+            requestUrl = createFormattedRecipeString(recipeRequest.getFoodQuery(), recipeRequest.getNutrientsEaten());
+        }
+        else {
+            throw new InvalidRequestException("Request type is not supported.");
+        }
+
+        try {
+            return JSONReader.readJsonFromUrl(requestUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
+    }
+
+    private String createFormattedFoodString(Food food) {
+        String foodNameFormatted = food.getFoodName().replaceAll(" ", "%20");
+
+        return String.format(url + apiParamFormat + "&ingr=%s", apiKey, apiId, foodNameFormatted);
+    }
+
+    private String createFormattedRecipeString(String query, ArrayList<Nutrient> nutrientsEaten) {
+        throw new UnsupportedOperationException();
     }
 
     public String getApiKey() {
