@@ -9,6 +9,11 @@ public class Food {
      * Food string (e.g. Apple)
      */
     private String foodName;
+
+    /**
+     * Brand associated with the product (e.g. McDonald's fries)
+     */
+    private String brandName;
     /**
      * Nutritional values of the food, received from the API
      */
@@ -20,9 +25,10 @@ public class Food {
         this.foodName = foodName;
     }
 
-    public Food(String foodName,
+    public Food(String foodName, String brandName,
         ArrayList<Nutrient> nutritionalInfo, double calories) {
         this.foodName = foodName;
+        this.brandName = brandName;
         this.nutritionalInfo = nutritionalInfo;
         this.calories = calories;
     }
@@ -50,4 +56,22 @@ public class Food {
     public void setCalories(double calories) {
         this.calories = calories;
     }
+
+  public String getBrandName() {
+    return brandName;
+  }
+
+  public void setBrandName(String brandName) {
+    this.brandName = brandName;
+  }
+
+  @Override
+  public String toString() {
+    return "Food{" +
+        "foodName='" + foodName + '\'' +
+        ", brandName='" + brandName + '\'' +
+        ", nutritionalInfo=" + nutritionalInfo +
+        ", calories=" + calories +
+        '}';
+  }
 }
