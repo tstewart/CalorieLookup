@@ -29,10 +29,6 @@ public class EdamamJSONParser implements IJSONParser {
         if(food != null) foods.add(food);
       }
     }
-    else {
-      return null;
-    }
-
     return foods;
   }
 

@@ -61,12 +61,9 @@ public class EdamamConnection extends Connection {
 
         try {
             return JSONReader.readJsonFromUrl(requestUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (JSONException | IOException e) {
+            throw new InvalidRequestException("An error occurred while contacting the API. Please try again later or contact the developer.");
         }
-        return null;
     }
 
     private String createFormattedFoodString(String food) {

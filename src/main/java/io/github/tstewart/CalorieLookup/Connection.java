@@ -2,6 +2,7 @@ package io.github.tstewart.CalorieLookup;
 
 import io.github.tstewart.CalorieLookup.error.APICallLimitReachedException;
 import io.github.tstewart.CalorieLookup.error.InvalidRequestException;
+import java.io.IOException;
 import org.json.JSONObject;
 
 public abstract class Connection {
