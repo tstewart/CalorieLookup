@@ -49,7 +49,7 @@ public class EdamamConnection extends Connection {
         String requestUrl;
 
         if(requestType instanceof FoodRequest) {
-            requestUrl = createFormattedFoodString(((FoodRequest) requestType).getFood());
+            requestUrl = createFormattedFoodString(((FoodRequest) requestType).getFoodRequest());
         }
         else if(requestType instanceof RecipeRequest) {
             RecipeRequest recipeRequest = (RecipeRequest) requestType;
@@ -69,8 +69,8 @@ public class EdamamConnection extends Connection {
         return null;
     }
 
-    private String createFormattedFoodString(Food food) {
-        String foodNameFormatted = food.getFoodName().replaceAll(" ", "%20");
+    private String createFormattedFoodString(String food) {
+        String foodNameFormatted = food.replaceAll(" ", "%20");
 
         return String.format(url + apiParamFormat + "&ingr=%s", apiKey, apiId, foodNameFormatted);
     }
