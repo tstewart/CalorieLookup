@@ -27,18 +27,3 @@ public class Nutrient {
     }
 }
 
-class Carbohydrates extends Nutrient {
-
-}
-
-class Fat extends Nutrient {
-
-}
-
-class Energy extends Nutrient {
-
-}
-
-class Protein extends Nutrient {
-
-}

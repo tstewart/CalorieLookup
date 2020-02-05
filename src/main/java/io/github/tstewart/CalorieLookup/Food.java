@@ -14,8 +14,17 @@ public class Food {
      */
     private ArrayList<Nutrient> nutritionalInfo;
 
+    private double calories;
+
     public Food(String foodName) {
         this.foodName = foodName;
+    }
+
+    public Food(String foodName,
+        ArrayList<Nutrient> nutritionalInfo, double calories) {
+        this.foodName = foodName;
+        this.nutritionalInfo = nutritionalInfo;
+        this.calories = calories;
     }
 
     public String getFoodName() {
@@ -32,5 +41,13 @@ public class Food {
 
     public void setNutritionalInfo(ArrayList<Nutrient> nutritionalInfo) {
         this.nutritionalInfo = nutritionalInfo;
+    }
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
     }
 }
