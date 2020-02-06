@@ -28,9 +28,9 @@ public class EdamamConnection extends Connection {
     private String apiKey;
     private String apiId;
 
-    public EdamamConnection(String apiKey, String apiId) {
-        this.apiKey = apiKey;
+    public EdamamConnection(String apiId, String apiKey) {
         this.apiId = apiId;
+        this.apiKey = apiKey;
     }
 
     /**
@@ -52,8 +52,7 @@ public class EdamamConnection extends Connection {
             requestUrl = createFormattedFoodString(((FoodRequest) requestType).getFoodRequest());
         }
         else if(requestType instanceof RecipeRequest) {
-            RecipeRequest recipeRequest = (RecipeRequest) requestType;
-            requestUrl = createFormattedRecipeString(recipeRequest.getFoodQuery(), recipeRequest.getNutrientsEaten());
+            requestUrl = createFormattedRecipeString((RecipeRequest) requestType);
         }
         else {
             throw new InvalidRequestException("Request type is not supported.");
@@ -67,13 +66,17 @@ public class EdamamConnection extends Connection {
     }
 
     private String createFormattedFoodString(String food) {
-        String foodNameFormatted = food.replaceAll(" ", "%20");
+        String foodNameFormatted = encode(food);
 
-        return String.format(url + apiParamFormat + "&ingr=%s", apiKey, apiId, foodNameFormatted);
+        return String.format(url + apiParamFormat + "&ingr=%s", apiId, apiKey, foodNameFormatted);
     }
 
     private String createFormattedRecipeString(String query, ArrayList<Nutrient> nutrientsEaten) {
         throw new UnsupportedOperationException();
+    }
+
+    private String encode(String string) {
+        return string.replaceAll(" ", "%20");
     }
 
     public String getApiKey() {
