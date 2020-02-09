@@ -1,7 +1,8 @@
 package io.github.tstewart.CalorieLookup.request;
 
-import io.github.tstewart.CalorieLookup.nutrients.Nutrient;
+import io.github.tstewart.CalorieLookup.nutrients.*;
 import io.github.tstewart.NutritionCalculator.UserInfo;
+import io.github.tstewart.NutritionCalculator.UserNutrition;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,8 @@ public class RecipeRequest extends Request {
      */
     private ArrayList<Nutrient> targetNutrients;
 
+    private double targetCalories;
+
     public RecipeRequest(String foodQuery, UserInfo user, ArrayList<Nutrient> nutrientsEaten) {
         this.foodQuery = foodQuery;
         this.user = user;
@@ -34,8 +37,24 @@ public class RecipeRequest extends Request {
      * Takes the nutrients already eaten and calculates what they still need to reach nutrient requirements for the day
      * @return The nutrients required to reach daily nutrient requirements
      */
-    private ArrayList<Nutrient> getTargetNutrients() {
-        return null;
+    public ArrayList<Nutrient> getTargetNutrients() {
+        UserNutrition nutrition = user.getUserNutrition();
+        ArrayList<Nutrient> targetNutrients = new ArrayList<>();
+        nutrientsEaten.forEach((nutrient -> {
+            if(nutrient instanceof Carbohydrates) {
+                targetNutrients.add(new Carbohydrates(nutrient.getAmount() - nutrition.getCaloriesRequired(), nutrient.getNtrCode()));
+            }
+            else if(nutrient instanceof Fat) {
+                targetNutrients.add(new Fat(nutrient.getAmount() - nutrition.getFatRequired(), nutrient.getNtrCode()));
+            }
+            else if(nutrient instanceof Fiber) {
+                targetNutrients.add(new Fiber(nutrient.getAmount() - nutrition.getFiberRequired(), nutrient.getNtrCode()));
+            }
+            else if(nutrient instanceof Protein) {
+                targetNutrients.add(new Protein(nutrient.getAmount() - nutrition.getProteinRequired(), nutrient.getNtrCode()));
+            }
+        }));
+        return targetNutrients;
     }
 
     public String getFoodQuery() {

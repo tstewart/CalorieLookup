@@ -71,8 +71,15 @@ public class EdamamConnection extends Connection {
         return String.format(url + apiParamFormat + "&ingr=%s", apiId, apiKey, foodNameFormatted);
     }
 
-    private String createFormattedRecipeString(String query, ArrayList<Nutrient> nutrientsEaten) {
-        throw new UnsupportedOperationException();
+    private String createFormattedRecipeString(RecipeRequest recipeRequest) {
+        String recipeQuery = encode(recipeRequest.getFoodQuery());
+
+        StringBuilder nutrients = new StringBuilder();
+        recipeRequest.getTargetNutrients().forEach((nutrient -> {
+            nutrients.append("nutrients[").append(nutrient.getNtrCode()).append("]=").append(nutrient.getAmount()).append("&");
+        }));
+
+        return String.format(url + apiParamFormat + "&q=%s&calories=%d", apiId, apiKey, recipeQuery);
     }
 
     private String encode(String string) {
