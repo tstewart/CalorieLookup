@@ -10,24 +10,15 @@ public class Recipe {
      * Recipe name
      */
     private String name;
-    /**
-     * Ingredients list, with the name and quantity of ingredients
-     */
-    private HashMap<String, Float> ingredients;
-    /**
-     * Total calories in the meal
-     */
-    private int calories;
-    /**
-     * Total nutrients in the meal
-     */
-    private ArrayList<Nutrient> nutrients;
 
-    public Recipe(String name, HashMap<String, Float> ingredients, int calories, ArrayList<Nutrient> nutrients) {
+    private String iconUrl;
+
+    private String recipeUrl;
+
+    public Recipe(String name, String iconUrl, String recipeUrl) {
         this.name = name;
-        this.ingredients = ingredients;
-        this.calories = calories;
-        this.nutrients = nutrients;
+        this.iconUrl = iconUrl;
+        this.recipeUrl = recipeUrl;
     }
 
     public String getName() {
@@ -38,27 +29,28 @@ public class Recipe {
         this.name = name;
     }
 
-    public HashMap<String, Float> getIngredients() {
-        return ingredients;
+    public String getIconUrl() {
+        return iconUrl;
     }
 
-    public void setIngredients(HashMap<String, Float> ingredients) {
-        this.ingredients = ingredients;
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 
-    public int getCalories() {
-        return calories;
+    public String getRecipeUrl() {
+        return recipeUrl;
     }
 
-    public void setCalories(int calories) {
-        this.calories = calories;
+    public void setRecipeUrl(String recipeUrl) {
+        this.recipeUrl = recipeUrl;
     }
 
-    public ArrayList<Nutrient> getNutrients() {
-        return nutrients;
-    }
-
-    public void setNutrients(ArrayList<Nutrient> nutrients) {
-        this.nutrients = nutrients;
+    @Override
+    public String toString() {
+        return "Recipe{" +
+            "name='" + name + '\'' +
+            ", iconUrl='" + iconUrl + '\'' +
+            ", recipeUrl='" + recipeUrl + '\'' +
+            '}';
     }
 }

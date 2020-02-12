@@ -2,23 +2,20 @@ package io.github.tstewart.CalorieLookup.edamam;
 
 import io.github.tstewart.CalorieLookup.APIRequest;
 import io.github.tstewart.CalorieLookup.Connection;
-import io.github.tstewart.CalorieLookup.Food;
-import io.github.tstewart.CalorieLookup.Recipe;
 import io.github.tstewart.CalorieLookup.error.APICallLimitReachedException;
 import io.github.tstewart.CalorieLookup.error.InvalidRequestException;
-import io.github.tstewart.CalorieLookup.nutrients.Nutrient;
 import io.github.tstewart.CalorieLookup.request.FoodRequest;
 import io.github.tstewart.CalorieLookup.request.RecipeRequest;
 import io.github.tstewart.CalorieLookup.request.Request;
 import io.github.tstewart.CalorieLookup.util.JSONReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class EdamamConnection extends Connection {
 
-    String url = "https://api.edamam.com/api/food-database/parser?";
+    String edamamFoodSearchUrl = "https://api.edamam.com/api/food-database/parser?";
+    String edamamRecipeSearchUrl = "https://api.edamam.com/search?";
     String apiParamFormat = "app_id=%s&app_key=%s";
 
 
@@ -68,9 +65,10 @@ public class EdamamConnection extends Connection {
     private String createFormattedFoodString(String food) {
         String foodNameFormatted = encode(food);
 
-        return String.format(url + apiParamFormat + "&ingr=%s", apiId, apiKey, foodNameFormatted);
+        return String.format(edamamFoodSearchUrl + apiParamFormat + "&ingr=%s", apiId, apiKey, foodNameFormatted);
     }
 
+    // TODO implement calorie requirement
     private String createFormattedRecipeString(RecipeRequest recipeRequest) {
         String recipeQuery = encode(recipeRequest.getFoodQuery());
 
@@ -79,7 +77,7 @@ public class EdamamConnection extends Connection {
             nutrients.append("nutrients[").append(nutrient.getNtrCode()).append("]=").append(nutrient.getAmount()).append("&");
         }));
 
-        return String.format(url + apiParamFormat + "&q=%s&calories=%d", apiId, apiKey, recipeQuery);
+        return String.format(edamamRecipeSearchUrl + apiParamFormat + "&q=%s&%s", apiId, apiKey, recipeQuery, nutrients.toString());
     }
 
     private String encode(String string) {

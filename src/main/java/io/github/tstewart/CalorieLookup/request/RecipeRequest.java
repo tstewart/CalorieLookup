@@ -38,6 +38,11 @@ public class RecipeRequest extends Request {
      * @return The nutrients required to reach daily nutrient requirements
      */
     public ArrayList<Nutrient> getTargetNutrients() {
+
+        if(nutrientsEaten == null || nutrientsEaten.size() == 0) {
+            return new ArrayList<>();
+        }
+
         UserNutrition nutrition = user.getUserNutrition();
         ArrayList<Nutrient> targetNutrients = new ArrayList<>();
         nutrientsEaten.forEach((nutrient -> {

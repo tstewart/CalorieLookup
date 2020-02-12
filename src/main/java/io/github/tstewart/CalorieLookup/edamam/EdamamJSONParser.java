@@ -17,6 +17,7 @@ public class EdamamJSONParser implements IJSONParser {
 
   final static String DEFAULT_FOOD_NAME = "No name provided.";
   final static String DEFAULT_BRAND_NAME = "Generic";
+  final static int MAX_RETURNED_RESULTS = 10;
 
   @Override
   public ArrayList<Food> parseFoodResponse(JSONObject object) throws JSONException {
@@ -33,8 +34,32 @@ public class EdamamJSONParser implements IJSONParser {
   }
 
   @Override
-  public ArrayList<Recipe> parseRecipeResponse(JSONObject object) {
-    return null;
+  public ArrayList<Recipe> parseRecipeResponse(JSONObject object) throws JSONException {
+    ArrayList<Recipe> recipes = new ArrayList<>(MAX_RETURNED_RESULTS);
+    JSONArray hits = object.getJSONArray("hits");
+
+    if(hits != null && hits.length() != 0) {
+      for(int i = 0; i < hits.length(); i++) {
+        JSONObject recipe = hits.getJSONObject(i).getJSONObject("recipe");
+
+        String name = null, url = null, icon = null;
+
+        try {
+          name = recipe.getString("label");
+          url = recipe.getString("url");
+          icon = recipe.getString("image");
+        }
+        catch(JSONException e) {
+          if(name == null) name = "Unknown Name";
+          if(icon == null) icon = "No Icon";
+          if(url == null) url = "No Url";
+        }
+
+        recipes.add(new Recipe(name, icon, url));
+      }
+    }
+
+    return recipes;
   }
 
   private JSONArray getAllFoodResponsesFromJSON(JSONObject object) throws JSONException {

@@ -10,6 +10,6 @@ import org.json.JSONObject;
 public interface IJSONParser {
 
   ArrayList<Food> parseFoodResponse(JSONObject object) throws JSONException, InvalidRequestException;
-  ArrayList<Recipe> parseRecipeResponse(JSONObject object);
+  ArrayList<Recipe> parseRecipeResponse(JSONObject object) throws JSONException;
 
 }
