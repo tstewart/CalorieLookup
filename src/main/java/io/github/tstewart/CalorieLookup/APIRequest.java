@@ -12,6 +12,14 @@ public class APIRequest {
      */
     private String formattedRequest;
 
+    public APIRequest(Request request) {
+        this.request = request;
+    }
+
+    public APIRequest() {
+
+    }
+
     public Request getRequest() {
         return request;
     }

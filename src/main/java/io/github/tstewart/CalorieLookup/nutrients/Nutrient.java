@@ -4,17 +4,22 @@ public class Nutrient {
     /**
      * Quantity of the specified nutrient
      */
-    private int amount;
+    private double amount;
     /**
      * Nutrition code (e.g. calorie nutrition code is CAL)
      */
     private String ntrCode;
 
-    public int getAmount() {
+    public Nutrient(double amount, String ntrCode) {
+        this.amount = amount;
+        this.ntrCode = ntrCode;
+    }
+
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -27,18 +32,3 @@ public class Nutrient {
     }
 }
 
-class Carbohydrates extends Nutrient {
-
-}
-
-class Fat extends Nutrient {
-
-}
-
-class Energy extends Nutrient {
-
-}
-
-class Protein extends Nutrient {
-
-}

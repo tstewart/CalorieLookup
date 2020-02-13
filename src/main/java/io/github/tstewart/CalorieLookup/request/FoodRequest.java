@@ -9,8 +9,17 @@ import java.util.ArrayList;
  */
 public class FoodRequest extends Request {
 
-    public FoodRequest(Food food) {
+    private String foodRequest;
 
+    public FoodRequest(String foodRequest) {
+        this.foodRequest = foodRequest;
     }
 
+    public String getFoodRequest() {
+        return foodRequest;
+    }
+
+    public void setFoodRequest(String foodRequest) {
+        this.foodRequest = foodRequest;
+    }
 }
