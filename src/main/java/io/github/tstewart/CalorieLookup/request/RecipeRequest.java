@@ -24,13 +24,14 @@ public class RecipeRequest extends Request {
      */
     private ArrayList<Nutrient> targetNutrients;
 
-    private double targetCalories;
+    private int targetCalories;
 
-    public RecipeRequest(String foodQuery, UserInfo user, ArrayList<Nutrient> nutrientsEaten) {
+    public RecipeRequest(String foodQuery, UserInfo user, ArrayList<Nutrient> nutrientsEaten, int caloriesEaten) {
         this.foodQuery = foodQuery;
         this.user = user;
         this.nutrientsEaten = nutrientsEaten;
         this.targetNutrients = getTargetNutrients();
+        this.targetCalories = (int) Math.floor(user.getUserNutrition().getCaloriesRequired() - caloriesEaten);
     }
 
     /**
@@ -88,5 +89,13 @@ public class RecipeRequest extends Request {
 
     public void setTargetNutrients(ArrayList<Nutrient> targetNutrients) {
         this.targetNutrients = targetNutrients;
+    }
+
+    public int getTargetCalories() {
+        return targetCalories;
+    }
+
+    public void setTargetCalories(int targetCalories) {
+        this.targetCalories = targetCalories;
     }
 }

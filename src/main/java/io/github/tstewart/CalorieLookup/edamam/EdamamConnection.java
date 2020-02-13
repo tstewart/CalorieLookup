@@ -58,6 +58,7 @@ public class EdamamConnection extends Connection {
         try {
             return JSONReader.readJsonFromUrl(requestUrl);
         } catch (JSONException | IOException e) {
+            System.out.println(e.getMessage());
             throw new InvalidRequestException("An error occurred while contacting the API. Please try again later or contact the developer.");
         }
     }
@@ -68,7 +69,6 @@ public class EdamamConnection extends Connection {
         return String.format(edamamFoodSearchUrl + apiParamFormat + "&ingr=%s", apiId, apiKey, foodNameFormatted);
     }
 
-    // TODO implement calorie requirement
     private String createFormattedRecipeString(RecipeRequest recipeRequest) {
         String recipeQuery = encode(recipeRequest.getFoodQuery());
 
@@ -76,6 +76,8 @@ public class EdamamConnection extends Connection {
         recipeRequest.getTargetNutrients().forEach((nutrient -> {
             nutrients.append("nutrients[").append(nutrient.getNtrCode()).append("]=").append(nutrient.getAmount()).append("&");
         }));
+
+        nutrients.append("calories=").append(recipeRequest.getTargetCalories());
 
         return String.format(edamamRecipeSearchUrl + apiParamFormat + "&q=%s&%s", apiId, apiKey, recipeQuery, nutrients.toString());
     }
