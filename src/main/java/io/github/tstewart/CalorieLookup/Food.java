@@ -67,11 +67,14 @@ public class Food {
 
   @Override
   public String toString() {
-    return "Food{" +
-        "foodName='" + foodName + '\'' +
-        ", brandName='" + brandName + '\'' +
-        ", nutritionalInfo=" + nutritionalInfo +
-        ", calories=" + calories +
-        '}';
+        StringBuilder nutrients = new StringBuilder();
+        getNutritionalInfo().forEach((nutrient -> {
+            nutrients.append(nutrient.toString()).append(" ");
+        }));
+
+        return "Name: " + getFoodName() + '\n' +
+                "Brand: " + getBrandName() + '\n' +
+                "Calories: " + getCalories() + '\n' +
+                "Nutrients: " + nutrients.toString();
   }
 }

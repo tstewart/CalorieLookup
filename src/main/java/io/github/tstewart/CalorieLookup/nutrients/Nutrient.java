@@ -15,6 +15,11 @@ public class Nutrient {
         this.ntrCode = ntrCode;
     }
 
+    @Override
+    public String toString() {
+        return getNtrCode() + ": " + getAmount();
+    }
+
     public double getAmount() {
         return amount;
     }
