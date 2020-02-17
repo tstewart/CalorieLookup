@@ -5,6 +5,7 @@ import io.github.tstewart.NutritionCalculator.UserInfo;
 import io.github.tstewart.NutritionCalculator.UserNutrition;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RecipeRequest extends Request {
     /**
@@ -17,8 +18,9 @@ public class RecipeRequest extends Request {
     private UserInfo user;
     /**
      * Nutrients eaten by user already
+     * Nutrient class, amount in double
      */
-    private ArrayList<Nutrient> nutrientsEaten;
+    private HashMap<Class<? extends Nutrient>, Double> nutrientsEaten;
     /**
      * Nutrients still required
      */
@@ -26,7 +28,7 @@ public class RecipeRequest extends Request {
 
     private int targetCalories;
 
-    public RecipeRequest(String foodQuery, UserInfo user, ArrayList<Nutrient> nutrientsEaten, int caloriesEaten) {
+    public RecipeRequest(String foodQuery, UserInfo user, HashMap<Class<? extends Nutrient>, Double> nutrientsEaten, int caloriesEaten) {
         this.foodQuery = foodQuery;
         this.user = user;
         this.nutrientsEaten = nutrientsEaten;
@@ -46,20 +48,26 @@ public class RecipeRequest extends Request {
 
         UserNutrition nutrition = user.getUserNutrition();
         ArrayList<Nutrient> targetNutrients = new ArrayList<>();
-        nutrientsEaten.forEach((nutrient -> {
-            if(nutrient instanceof Carbohydrates) {
-                targetNutrients.add(new Carbohydrates(nutrient.getAmount() - nutrition.getCaloriesRequired(), nutrient.getNtrCode()));
+        nutrientsEaten.forEach((nutrientClass, amount) -> {
+            try {
+                Nutrient nutrient = nutrientClass.newInstance();
+
+                if(nutrient instanceof Carbohydrates) {
+                    targetNutrients.add(new Carbohydrates(amount - nutrition.getCarbohydratesRequired(), nutrient.getNtrCode()));
+                }
+                else if(nutrient instanceof Fat) {
+                    targetNutrients.add(new Fat(amount - nutrition.getFatRequired(), nutrient.getNtrCode()));
+                }
+                else if(nutrient instanceof Fiber) {
+                    targetNutrients.add(new Fiber(amount- nutrition.getFiberRequired(), nutrient.getNtrCode()));
+                }
+                else if(nutrient instanceof Protein) {
+                    targetNutrients.add(new Protein(amount - nutrition.getProteinRequired(), nutrient.getNtrCode()));
+                }
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
             }
-            else if(nutrient instanceof Fat) {
-                targetNutrients.add(new Fat(nutrient.getAmount() - nutrition.getFatRequired(), nutrient.getNtrCode()));
-            }
-            else if(nutrient instanceof Fiber) {
-                targetNutrients.add(new Fiber(nutrient.getAmount() - nutrition.getFiberRequired(), nutrient.getNtrCode()));
-            }
-            else if(nutrient instanceof Protein) {
-                targetNutrients.add(new Protein(nutrient.getAmount() - nutrition.getProteinRequired(), nutrient.getNtrCode()));
-            }
-        }));
+        });
         return targetNutrients;
     }
 
@@ -79,11 +87,11 @@ public class RecipeRequest extends Request {
         this.user = user;
     }
 
-    public ArrayList<Nutrient> getNutrientsEaten() {
+    public HashMap<Class<? extends Nutrient>, Double> getNutrientsEaten() {
         return nutrientsEaten;
     }
 
-    public void setNutrientsEaten(ArrayList<Nutrient> nutrientsEaten) {
+    public void setNutrientsEaten(HashMap<Class<? extends Nutrient>, Double> nutrientsEaten) {
         this.nutrientsEaten = nutrientsEaten;
     }
 
