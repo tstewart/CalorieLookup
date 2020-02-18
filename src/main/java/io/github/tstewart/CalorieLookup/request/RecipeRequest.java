@@ -53,16 +53,16 @@ public class RecipeRequest extends Request {
                 Nutrient nutrient = nutrientClass.newInstance();
 
                 if(nutrient instanceof Carbohydrates) {
-                    targetNutrients.add(new Carbohydrates(amount - nutrition.getCarbohydratesRequired(), nutrient.getNtrCode()));
+                    targetNutrients.add(new Carbohydrates(nutrition.getCarbohydratesRequired() - amount, "CHOCDF"));
                 }
                 else if(nutrient instanceof Fat) {
-                    targetNutrients.add(new Fat(amount - nutrition.getFatRequired(), nutrient.getNtrCode()));
+                    targetNutrients.add(new Fat(nutrition.getFatRequired() - amount, "FAT"));
                 }
                 else if(nutrient instanceof Fiber) {
-                    targetNutrients.add(new Fiber(amount- nutrition.getFiberRequired(), nutrient.getNtrCode()));
+                    targetNutrients.add(new Fiber(nutrition.getFiberRequired() - amount, "FIBTG"));
                 }
                 else if(nutrient instanceof Protein) {
-                    targetNutrients.add(new Protein(amount - nutrition.getProteinRequired(), nutrient.getNtrCode()));
+                    targetNutrients.add(new Protein(nutrition.getProteinRequired() - amount, "PROCNT"));
                 }
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
