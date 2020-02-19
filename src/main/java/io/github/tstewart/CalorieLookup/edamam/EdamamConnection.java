@@ -74,16 +74,22 @@ public class EdamamConnection extends Connection {
 
         StringBuilder nutrients = new StringBuilder();
         recipeRequest.getTargetNutrients().forEach((nutrient -> {
-            nutrients.append("nutrients[").append(nutrient.getNtrCode()).append("]=").append(nutrient.getAmount()).append("&");
+            nutrients.append("nutrients[").append(nutrient.getNtrCode()).append("]=").append((int)Math.floor(nutrient.getAmount())).append("&");
         }));
+
+        String nutrientsEncoded = encode(nutrients.toString());
 
         nutrients.append("calories=").append(recipeRequest.getTargetCalories());
 
-        return String.format(edamamRecipeSearchUrl + apiParamFormat + "&q=%s&%s", apiId, apiKey, recipeQuery, nutrients.toString());
+        return String.format(edamamRecipeSearchUrl + apiParamFormat + "&q=%s&%s", apiId, apiKey, recipeQuery, nutrientsEncoded);
     }
 
     private String encode(String string) {
-        return string.replaceAll(" ", "%20");
+        string = string.replace(" ", "%20");
+        string = string.replace("[", "%5B");
+        string = string.replace("]", "%5D");
+        string = string.replace("'", "%27");
+        return string;
     }
 
     public String getApiKey() {
