@@ -2,7 +2,6 @@ package io.github.tstewart.CalorieLookup.edamam;
 
 import io.github.tstewart.CalorieLookup.APIRequest;
 import io.github.tstewart.CalorieLookup.Connection;
-import io.github.tstewart.CalorieLookup.error.APICallLimitReachedException;
 import io.github.tstewart.CalorieLookup.error.InvalidRequestException;
 import io.github.tstewart.CalorieLookup.request.FoodRequest;
 import io.github.tstewart.CalorieLookup.request.RecipeRequest;
@@ -35,10 +34,9 @@ public class EdamamConnection extends Connection {
      * @param request Formatted API request
      * @return Returns the HTML response from Edamam
      * @throws InvalidRequestException If the request was malformed (e.g. contained invalid information)
-     * @throws APICallLimitReachedException If the Edamam API has reached the maximum number of hourly queries
      */
     @Override
-    public JSONObject request(APIRequest request) throws InvalidRequestException, APICallLimitReachedException {
+    public JSONObject request(APIRequest request) throws InvalidRequestException {
         if(request == null) throw new InvalidRequestException("Please specify a valid APIRequest");
         if(apiKey == null || apiId == null) throw new InvalidRequestException("A valid API id and key must be provided.");
 
