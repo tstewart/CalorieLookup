@@ -2,10 +2,11 @@ package io.github.tstewart.CalorieLookup;
 
 import io.github.tstewart.CalorieLookup.nutrients.Nutrient;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Recipe {
+public class Recipe implements Serializable {
     /**
      * Recipe name
      */
