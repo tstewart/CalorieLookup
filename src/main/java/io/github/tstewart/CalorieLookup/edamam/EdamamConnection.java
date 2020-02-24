@@ -4,6 +4,7 @@ import io.github.tstewart.CalorieLookup.APIRequest;
 import io.github.tstewart.CalorieLookup.Connection;
 import io.github.tstewart.CalorieLookup.error.APICallLimitReachedException;
 import io.github.tstewart.CalorieLookup.error.InvalidRequestException;
+import io.github.tstewart.CalorieLookup.error.InvalidResponseException;
 import io.github.tstewart.CalorieLookup.request.FoodRequest;
 import io.github.tstewart.CalorieLookup.request.RecipeRequest;
 import io.github.tstewart.CalorieLookup.request.Request;
@@ -38,7 +39,7 @@ public class EdamamConnection extends Connection {
      * @throws APICallLimitReachedException If the Edamam API has reached the maximum number of hourly queries
      */
     @Override
-    public JSONObject request(APIRequest request) throws InvalidRequestException, APICallLimitReachedException {
+    public JSONObject request(APIRequest request) throws InvalidRequestException, APICallLimitReachedException, InvalidResponseException {
         if(request == null) throw new InvalidRequestException("Please specify a valid APIRequest");
         if(apiKey == null || apiId == null) throw new InvalidRequestException("A valid API id and key must be provided.");
 
@@ -58,7 +59,14 @@ public class EdamamConnection extends Connection {
         try {
             return JSONReader.readJsonFromUrl(requestUrl);
         } catch (JSONException | IOException e) {
-            System.out.println(e.getMessage());
+            String errorMsg = e.getMessage();
+            if(errorMsg != null) {
+                // If the error response is a fault on behalf of the server
+                if(errorMsg.startsWith("Server returned HTTP response code")) {
+                    String errorCode = errorMsg.split("for URL")[0];
+                    throw new InvalidResponseException(errorCode);
+                }
+            }
             throw new InvalidRequestException("An error occurred while contacting the API. Please try again later or contact the developer.");
         }
     }
