@@ -1,6 +1,5 @@
 package io.github.tstewart.CalorieLookup;
 
-import io.github.tstewart.CalorieLookup.error.APICallLimitReachedException;
 import io.github.tstewart.CalorieLookup.error.InvalidRequestException;
 import java.io.IOException;
 
@@ -18,9 +17,8 @@ public abstract class Connection {
      * @param request Formatted API request
      * @return Returns the HTML response from Edamam
      * @throws InvalidRequestException If the request was malformed (e.g. contained invalid information)
-     * @throws APICallLimitReachedException If the Edamam API has reached the maximum number of hourly queries
      */
-    public abstract JSONObject request(APIRequest request) throws InvalidRequestException, APICallLimitReachedException, InvalidResponseException;
+    public abstract JSONObject request(APIRequest request) throws InvalidRequestException, InvalidResponseException;
 
     public String getConnectionUrl() {
         return connectionUrl;
