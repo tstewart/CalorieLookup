@@ -1,10 +1,6 @@
 package io.github.tstewart.CalorieLookup;
 
-import io.github.tstewart.CalorieLookup.nutrients.Nutrient;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Recipe implements Serializable {
     /**
@@ -16,38 +12,39 @@ public class Recipe implements Serializable {
 
     private String recipeUrl;
 
-    public Recipe(String name, String iconUrl, String recipeUrl) {
+    public Recipe(final String name, final String iconUrl, final String recipeUrl) {
+        super();
         this.name = name;
         this.iconUrl = iconUrl;
         this.recipeUrl = recipeUrl;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public String getIconUrl() {
-        return iconUrl;
+        return this.iconUrl;
     }
 
-    public void setIconUrl(String iconUrl) {
+    public void setIconUrl(final String iconUrl) {
         this.iconUrl = iconUrl;
     }
 
     public String getRecipeUrl() {
-        return recipeUrl;
+        return this.recipeUrl;
     }
 
-    public void setRecipeUrl(String recipeUrl) {
+    public void setRecipeUrl(final String recipeUrl) {
         this.recipeUrl = recipeUrl;
     }
 
     @Override
     public String toString() {
-        return name;
+        return this.name;
     }
 }

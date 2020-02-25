@@ -8,15 +8,16 @@ import io.github.tstewart.CalorieLookup.request.FoodRequest;
 import io.github.tstewart.CalorieLookup.request.RecipeRequest;
 import io.github.tstewart.CalorieLookup.request.Request;
 import io.github.tstewart.CalorieLookup.util.JSONReader;
-import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 public class EdamamConnection extends Connection {
 
-    String edamamFoodSearchUrl = "https://api.edamam.com/api/food-database/parser?";
-    String edamamRecipeSearchUrl = "https://api.edamam.com/search?";
-    String apiParamFormat = "app_id=%s&app_key=%s";
+    private final String edamamFoodSearchUrl = "https://api.edamam.com/api/food-database/parser?";
+    private final String edamamRecipeSearchUrl = "https://api.edamam.com/search?";
+    private final String apiParamFormat = "app_id=%s&app_key=%s";
 
 
     /**
@@ -25,43 +26,44 @@ public class EdamamConnection extends Connection {
     private String apiKey;
     private String apiId;
 
-    public EdamamConnection(String apiId, String apiKey) {
+    public EdamamConnection(final String apiId, final String apiKey) {
+        super();
         this.apiId = apiId;
         this.apiKey = apiKey;
     }
 
     /**
      * 1. Sends a HTML request to the Edamam API with the provided API key, ID, and formatted API request
+     *
      * @param request Formatted API request
      * @return Returns the HTML response from Edamam
      * @throws InvalidRequestException If the request was malformed (e.g. contained invalid information)
      */
     @Override
-    public JSONObject request(APIRequest request) throws InvalidRequestException, InvalidResponseException {
-        if(request == null) throw new InvalidRequestException("Please specify a valid APIRequest");
-        if(apiKey == null || apiId == null) throw new InvalidRequestException("A valid API id and key must be provided.");
+    public JSONObject request(final APIRequest request) throws InvalidRequestException, InvalidResponseException {
+        if (null == request) throw new InvalidRequestException("Please specify a valid APIRequest");
+        if (null == apiKey || null == apiId)
+            throw new InvalidRequestException("A valid API id and key must be provided.");
 
-        Request requestType = request.getRequest();
-        String requestUrl;
+        final Request requestType = request.getRequest();
+        final String requestUrl;
 
-        if(requestType instanceof FoodRequest) {
-            requestUrl = createFormattedFoodString(((FoodRequest) requestType).getFoodRequest());
-        }
-        else if(requestType instanceof RecipeRequest) {
-            requestUrl = createFormattedRecipeString((RecipeRequest) requestType);
-        }
-        else {
+        if (requestType instanceof FoodRequest) {
+            requestUrl = this.createFormattedFoodString(((FoodRequest) requestType).getFoodRequest());
+        } else if (requestType instanceof RecipeRequest) {
+            requestUrl = this.createFormattedRecipeString((RecipeRequest) requestType);
+        } else {
             throw new InvalidRequestException("Request type is not supported.");
         }
 
         try {
             return JSONReader.readJsonFromUrl(requestUrl);
-        } catch (JSONException | IOException e) {
-            String errorMsg = e.getMessage();
-            if(errorMsg != null) {
+        } catch (final JSONException | IOException e) {
+            final String errorMsg = e.getMessage();
+            if (null != errorMsg) {
                 // If the error response is a fault on behalf of the server
-                if(errorMsg.startsWith("Server returned HTTP response code")) {
-                    String errorCode = errorMsg.split("for URL")[0];
+                if (errorMsg.startsWith("Server returned HTTP response code")) {
+                    final String errorCode = errorMsg.split("for URL")[0];
                     throw new InvalidResponseException(errorCode);
                 }
             }
@@ -69,25 +71,23 @@ public class EdamamConnection extends Connection {
         }
     }
 
-    private String createFormattedFoodString(String food) {
-        String foodNameFormatted = encode(food);
+    private String createFormattedFoodString(final String food) {
+        final String foodNameFormatted = this.encode(food);
 
-        return String.format(edamamFoodSearchUrl + apiParamFormat + "&ingr=%s", apiId, apiKey, foodNameFormatted);
+        return String.format(this.edamamFoodSearchUrl + this.apiParamFormat + "&ingr=%s", this.apiId, this.apiKey, foodNameFormatted);
     }
 
-    private String createFormattedRecipeString(RecipeRequest recipeRequest) {
-        String recipeQuery = encode(recipeRequest.getFoodQuery());
+    private String createFormattedRecipeString(final RecipeRequest recipeRequest) {
+        final String recipeQuery = this.encode(recipeRequest.getFoodQuery());
 
-        StringBuilder nutrients = new StringBuilder();
-        recipeRequest.getTargetNutrients().forEach((nutrient -> {
-            nutrients.append("nutrients[").append(nutrient.getNtrCode()).append("]=").append((int)Math.floor(nutrient.getAmount())).append("&");
-        }));
+        final StringBuilder nutrients = new StringBuilder();
+        recipeRequest.getTargetNutrients().forEach((nutrient -> nutrients.append("nutrients[").append(nutrient.getNtrCode()).append("]=").append((int) Math.floor(nutrient.getAmount())).append("&")));
 
-        String nutrientsEncoded = encode(nutrients.toString());
+        final String nutrientsEncoded = this.encode(nutrients.toString());
 
         nutrients.append("calories=").append(recipeRequest.getTargetCalories());
 
-        return String.format(edamamRecipeSearchUrl + apiParamFormat + "&q=%s&%s", apiId, apiKey, recipeQuery, nutrientsEncoded);
+        return String.format(this.edamamRecipeSearchUrl + this.apiParamFormat + "&q=%s&%s", this.apiId, this.apiKey, recipeQuery, nutrientsEncoded);
     }
 
     private String encode(String string) {
@@ -99,18 +99,18 @@ public class EdamamConnection extends Connection {
     }
 
     public String getApiKey() {
-        return apiKey;
+        return this.apiKey;
     }
 
-    public void setApiKey(String apiKey) {
+    public void setApiKey(final String apiKey) {
         this.apiKey = apiKey;
     }
 
     public String getApiId() {
-        return apiId;
+        return this.apiId;
     }
 
-    public void setApiId(String apiId) {
+    public void setApiId(final String apiId) {
         this.apiId = apiId;
     }
 }

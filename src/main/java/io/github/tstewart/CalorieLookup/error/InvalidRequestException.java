@@ -5,7 +5,7 @@ package io.github.tstewart.CalorieLookup.error;
  */
 public class InvalidRequestException extends Exception {
 
-  public InvalidRequestException(String errorText) {
-    super(errorText);
-  }
+    public InvalidRequestException(final String errorText) {
+        super(errorText);
+    }
 }

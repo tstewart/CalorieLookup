@@ -13,68 +13,68 @@ public class Food {
     /**
      * Brand associated with the product (e.g. McDonald's fries)
      */
-    private String brandName;
+    private String brandName = null;
     /**
      * Nutritional values of the food, received from the API
      */
-    private ArrayList<Nutrient> nutritionalInfo;
+    private ArrayList<Nutrient> nutritionalInfo = null;
 
-    private double calories;
+    private double calories = 0.0;
 
-    public Food(String foodName) {
+    public Food(final String foodName) {
+        super();
         this.foodName = foodName;
     }
 
-    public Food(String foodName, String brandName,
-        ArrayList<Nutrient> nutritionalInfo, double calories) {
+    public Food(final String foodName, final String brandName,
+                final ArrayList<Nutrient> nutritionalInfo, final double calories) {
+        super();
         this.foodName = foodName;
         this.brandName = brandName;
         this.nutritionalInfo = nutritionalInfo;
         this.calories = calories;
     }
 
-    public String getFoodName() {
-        return foodName;
+    private String getFoodName() {
+        return this.foodName;
     }
 
-    public void setFoodName(String foodName) {
+    public void setFoodName(final String foodName) {
         this.foodName = foodName;
     }
 
-    public ArrayList<Nutrient> getNutritionalInfo() {
-        return nutritionalInfo;
+    private Iterable<Nutrient> getNutritionalInfo() {
+        return this.nutritionalInfo;
     }
 
-    public void setNutritionalInfo(ArrayList<Nutrient> nutritionalInfo) {
+    public void setNutritionalInfo(final ArrayList<Nutrient> nutritionalInfo) {
         this.nutritionalInfo = nutritionalInfo;
     }
 
-    public double getCalories() {
-        return calories;
+    private double getCalories() {
+        return this.calories;
     }
 
-    public void setCalories(double calories) {
+    public void setCalories(final double calories) {
         this.calories = calories;
     }
 
-  public String getBrandName() {
-    return brandName;
-  }
+    private String getBrandName() {
+        return this.brandName;
+    }
 
-  public void setBrandName(String brandName) {
-    this.brandName = brandName;
-  }
+    public void setBrandName(final String brandName) {
+        this.brandName = brandName;
+    }
 
-  @Override
-  public String toString() {
-        StringBuilder nutrients = new StringBuilder();
-        getNutritionalInfo().forEach((nutrient -> {
-            nutrients.append(nutrient.toString()).append(" ");
-        }));
+    @Override
+    public String toString() {
+        final StringBuilder nutrients = new StringBuilder();
+        this.getNutritionalInfo().forEach((nutrient -> nutrients.append(nutrient).append(" ")));
 
-        return "Name: " + getFoodName() + '\n' +
-                "Brand: " + getBrandName() + '\n' +
-                "Calories: " + getCalories() + '\n' +
-                "Nutrients: " + nutrients.toString();
-  }
+        return "Name: " + this.getFoodName() + '\n' +
+                "Brand: " + this.getBrandName() + '\n' +
+                "Calories: " + this.getCalories() + '\n' +
+                "Nutrients: " + nutrients;
+    }
 }

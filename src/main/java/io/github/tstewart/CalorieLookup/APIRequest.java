@@ -6,33 +6,28 @@ public class APIRequest {
     /**
      * Food or Recipe request to be formatted and sent to API
      */
-    private Request request;
+    private Request request = null;
     /**
      * Formatted API request string (e.g. www.api.com/q=chicken)
      */
-    private String formattedRequest;
+    private String formattedRequest = null;
 
-    public APIRequest(Request request) {
+    public APIRequest(final Request request) {
+        super();
         this.request = request;
     }
 
     public APIRequest() {
+        super();
 
     }
 
     public Request getRequest() {
-        return request;
+        return this.request;
     }
 
-    public void setRequest(Request request) {
+    public void setRequest(final Request request) {
         this.request = request;
     }
 
-    public String getFormattedRequest() {
-        return formattedRequest;
-    }
-
-    public void setFormattedRequest(String formattedRequest) {
-        this.formattedRequest = formattedRequest;
-    }
 }

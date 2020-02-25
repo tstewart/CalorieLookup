@@ -6,6 +6,7 @@ import io.github.tstewart.NutritionCalculator.UserNutrition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class RecipeRequest extends Request {
     /**
@@ -24,47 +25,46 @@ public class RecipeRequest extends Request {
     /**
      * Nutrients still required
      */
-    private ArrayList<Nutrient> targetNutrients;
+    private List<Nutrient> targetNutrients;
 
     private int targetCalories;
 
-    public RecipeRequest(String foodQuery, UserInfo user, HashMap<Class<? extends Nutrient>, Double> nutrientsEaten, int caloriesEaten) {
+    public RecipeRequest(final String foodQuery, final UserInfo user, final HashMap<Class<? extends Nutrient>, Double> nutrientsEaten, final int caloriesEaten) {
+        super();
         this.foodQuery = foodQuery;
         this.user = user;
         this.nutrientsEaten = nutrientsEaten;
-        this.targetNutrients = getTargetNutrients();
-        this.targetCalories = (int) Math.floor(user.getUserNutrition().getCaloriesRequired() - caloriesEaten);
+        targetNutrients = this.getTargetNutrients();
+        targetCalories = (int) Math.floor(user.getUserNutrition().getCaloriesRequired() - caloriesEaten);
     }
 
     /**
      * Takes the nutrients already eaten and calculates what they still need to reach nutrient requirements for the day
+     *
      * @return The nutrients required to reach daily nutrient requirements
      */
     public ArrayList<Nutrient> getTargetNutrients() {
 
-        if(nutrientsEaten == null || nutrientsEaten.size() == 0) {
+        if (null == nutrientsEaten || nutrientsEaten.isEmpty()) {
             return new ArrayList<>();
         }
 
-        UserNutrition nutrition = user.getUserNutrition();
-        ArrayList<Nutrient> targetNutrients = new ArrayList<>();
-        nutrientsEaten.forEach((nutrientClass, amount) -> {
+        final UserNutrition nutrition = this.user.getUserNutrition();
+        final ArrayList<Nutrient> targetNutrients = new ArrayList<>();
+        this.nutrientsEaten.forEach((nutrientClass, amount) -> {
             try {
-                Nutrient nutrient = nutrientClass.newInstance();
+                final Nutrient nutrient = nutrientClass.newInstance();
 
-                if(nutrient instanceof Carbohydrates) {
+                if (nutrient instanceof Carbohydrates) {
                     targetNutrients.add(new Carbohydrates(nutrition.getCarbohydratesRequired() - amount, "CHOCDF"));
-                }
-                else if(nutrient instanceof Fat) {
+                } else if (nutrient instanceof Fat) {
                     targetNutrients.add(new Fat(nutrition.getFatRequired() - amount, "FAT"));
-                }
-                else if(nutrient instanceof Fiber) {
+                } else if (nutrient instanceof Fiber) {
                     targetNutrients.add(new Fiber(nutrition.getFiberRequired() - amount, "FIBTG"));
-                }
-                else if(nutrient instanceof Protein) {
+                } else if (nutrient instanceof Protein) {
                     targetNutrients.add(new Protein(nutrition.getProteinRequired() - amount, "PROCNT"));
                 }
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (final InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         });
@@ -72,38 +72,38 @@ public class RecipeRequest extends Request {
     }
 
     public String getFoodQuery() {
-        return foodQuery;
+        return this.foodQuery;
     }
 
-    public void setFoodQuery(String foodQuery) {
+    public void setFoodQuery(final String foodQuery) {
         this.foodQuery = foodQuery;
     }
 
     public UserInfo getUser() {
-        return user;
+        return this.user;
     }
 
-    public void setUser(UserInfo user) {
+    public void setUser(final UserInfo user) {
         this.user = user;
     }
 
     public HashMap<Class<? extends Nutrient>, Double> getNutrientsEaten() {
-        return nutrientsEaten;
+        return this.nutrientsEaten;
     }
 
-    public void setNutrientsEaten(HashMap<Class<? extends Nutrient>, Double> nutrientsEaten) {
+    public void setNutrientsEaten(final HashMap<Class<? extends Nutrient>, Double> nutrientsEaten) {
         this.nutrientsEaten = nutrientsEaten;
     }
 
-    public void setTargetNutrients(ArrayList<Nutrient> targetNutrients) {
+    public void setTargetNutrients(final ArrayList<Nutrient> targetNutrients) {
         this.targetNutrients = targetNutrients;
     }
 
     public int getTargetCalories() {
-        return targetCalories;
+        return this.targetCalories;
     }
 
-    public void setTargetCalories(int targetCalories) {
+    public void setTargetCalories(final int targetCalories) {
         this.targetCalories = targetCalories;
     }
 }

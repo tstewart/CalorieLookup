@@ -4,37 +4,40 @@ public class Nutrient {
     /**
      * Quantity of the specified nutrient
      */
-    private double amount;
+    private double amount = 0.0;
     /**
      * Nutrition code (e.g. calorie nutrition code is CAL)
      */
-    private String ntrCode;
+    private String ntrCode = null;
 
-    public Nutrient(double amount, String ntrCode) {
+    Nutrient(final double amount, final String ntrCode) {
+        super();
         this.amount = amount;
         this.ntrCode = ntrCode;
     }
 
-    public Nutrient() {}
+    Nutrient() {
+        super();
+    }
 
     @Override
     public String toString() {
-        return getNtrCode() + ": " + getAmount();
+        return this.getNtrCode() + ": " + this.getAmount();
     }
 
     public double getAmount() {
-        return amount;
+        return this.amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(final double amount) {
         this.amount = amount;
     }
 
     public String getNtrCode() {
-        return ntrCode;
+        return this.ntrCode;
     }
 
-    public void setNtrCode(String ntrCode) {
+    public void setNtrCode(final String ntrCode) {
         this.ntrCode = ntrCode;
     }
 }

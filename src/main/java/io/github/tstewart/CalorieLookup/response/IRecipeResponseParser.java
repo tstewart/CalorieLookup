@@ -4,5 +4,5 @@ import io.github.tstewart.CalorieLookup.Recipe;
 import io.github.tstewart.CalorieLookup.error.InvalidResponseException;
 
 public interface IRecipeResponseParser {
-    Recipe parseResponse(String apiResponse) throws InvalidResponseException;
+    Recipe parseResponse(String apiResponse);
 }
