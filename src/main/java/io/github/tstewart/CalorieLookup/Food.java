@@ -35,7 +35,7 @@ public class Food {
         this.calories = calories;
     }
 
-    private String getFoodName() {
+    public String getFoodName() {
         return this.foodName;
     }
 
@@ -43,7 +43,7 @@ public class Food {
         this.foodName = foodName;
     }
 
-    private Iterable<Nutrient> getNutritionalInfo() {
+    public Iterable<Nutrient> getNutritionalInfo() {
         return this.nutritionalInfo;
     }
 
@@ -51,7 +51,7 @@ public class Food {
         this.nutritionalInfo = nutritionalInfo;
     }
 
-    private double getCalories() {
+    public double getCalories() {
         return this.calories;
     }
 
@@ -59,7 +59,7 @@ public class Food {
         this.calories = calories;
     }
 
-    private String getBrandName() {
+    public String getBrandName() {
         return this.brandName;
     }
 
