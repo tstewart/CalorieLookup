@@ -2,6 +2,9 @@ package io.github.tstewart.CalorieLookup;
 
 import java.io.Serializable;
 
+/**
+ * Author: Thomas Stewart
+ */
 public class Recipe implements Serializable {
     /**
      * Recipe name

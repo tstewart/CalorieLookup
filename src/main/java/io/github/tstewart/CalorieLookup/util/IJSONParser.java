@@ -8,6 +8,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Author: Thomas Stewart
+ */
 public interface IJSONParser {
 
     ArrayList<Food> parseFoodResponse(JSONObject object) throws JSONException;

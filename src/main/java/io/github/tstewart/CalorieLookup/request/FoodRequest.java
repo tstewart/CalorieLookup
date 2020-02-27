@@ -1,6 +1,7 @@
 package io.github.tstewart.CalorieLookup.request;
 
 /**
+ * Author: Thomas Stewart
  * Converts food to API request for food
  */
 public class FoodRequest extends Request {

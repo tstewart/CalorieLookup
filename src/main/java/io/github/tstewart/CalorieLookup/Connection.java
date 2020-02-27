@@ -4,6 +4,9 @@ import io.github.tstewart.CalorieLookup.error.InvalidRequestException;
 import io.github.tstewart.CalorieLookup.error.InvalidResponseException;
 import org.json.JSONObject;
 
+/**
+ * Author: Thomas Stewart
+ */
 public abstract class Connection {
     /**
      * API connection string (e.g. www.api.com)

@@ -4,6 +4,9 @@ import io.github.tstewart.CalorieLookup.nutrients.Nutrient;
 
 import java.util.ArrayList;
 
+/**
+ * Author: Thomas Stewart
+ */
 public class Food {
     /**
      * Food string (e.g. Apple)

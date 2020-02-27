@@ -7,6 +7,9 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Author: Roland Illig and Thomas Stewart
+ */
 // The following code is owned by Roland Illig from StackOverflow Question
 // URL: https://stackoverflow.com/questions/4308554/simplest-way-to-read-json-from-a-url-in-java
 public enum JSONReader {

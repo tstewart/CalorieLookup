@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Author: Thomas Stewart
+ */
 public class RecipeRequest extends Request {
     /**
      * Request string to narrow down recipe request (e.g. a food query of "chicken" will only return chicken based recipes)
@@ -45,6 +48,7 @@ public class RecipeRequest extends Request {
      */
     public ArrayList<Nutrient> getTargetNutrients() {
 
+        // If there are no nutrients eaten, then just return an empty array
         if (null == nutrientsEaten || nutrientsEaten.isEmpty()) {
             return new ArrayList<>();
         }
@@ -53,8 +57,10 @@ public class RecipeRequest extends Request {
         final ArrayList<Nutrient> targetNutrients = new ArrayList<>();
         this.nutrientsEaten.forEach((nutrientClass, amount) -> {
             try {
+                // Try and instantiate a new instance of the class in the nutrients eaten hashmap.
                 final Nutrient nutrient = nutrientClass.newInstance();
 
+                // Find what the nutrient class is an instance of, and then create a new instance with the required amount.
                 if (nutrient instanceof Carbohydrates) {
                     targetNutrients.add(new Carbohydrates(nutrition.getCarbohydratesRequired() - amount, "CHOCDF"));
                 } else if (nutrient instanceof Fat) {
@@ -65,6 +71,7 @@ public class RecipeRequest extends Request {
                     targetNutrients.add(new Protein(nutrition.getProteinRequired() - amount, "PROCNT"));
                 }
             } catch (final InstantiationException | IllegalAccessException e) {
+                // if the nutrient fails to instantiate, then it should be ignored.
                 e.printStackTrace();
             }
         });

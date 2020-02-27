@@ -1,5 +1,8 @@
 package io.github.tstewart.CalorieLookup.nutrients;
 
+/**
+ * Author: Thomas Stewart
+ */
 public class Nutrient {
     /**
      * Quantity of the specified nutrient
