@@ -82,11 +82,18 @@ public class EdamamConnection extends Connection {
         final String mealTypeOverride = "mealtype=dinner";
 
         final StringBuilder nutrients = new StringBuilder();
-        recipeRequest.getTargetNutrients().forEach((nutrient -> nutrients.append("nutrients[").append(nutrient.getNtrCode()).append("]=").append((int) Math.floor(nutrient.getAmount())).append("&")));
+        recipeRequest.getTargetNutrients().forEach((nutrient -> {
+            if (nutrient.getAmount() > 0) {
+                nutrients.append("nutrients[").append(nutrient.getNtrCode()).append("]=").append((int) Math.floor(nutrient.getAmount())).append("&");
+            }
+        }));
 
         final String nutrientsEncoded = this.encode(nutrients.toString());
+        final int targetCalories = recipeRequest.getTargetCalories();
 
-        nutrients.append("calories=").append(recipeRequest.getTargetCalories());
+        if(targetCalories > 0) {
+            nutrients.append("calories=").append(targetCalories);
+        }
 
         return String.format(this.edamamRecipeSearchUrl + this.apiParamFormat + "&q=%s&%s&%s", this.apiId, this.apiKey, recipeQuery, mealTypeOverride, nutrientsEncoded);
     }
